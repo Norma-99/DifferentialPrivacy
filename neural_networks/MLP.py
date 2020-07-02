@@ -5,8 +5,8 @@ import tensorflow as tf
 import numpy as np
 import random
 
-NODES = 7
-ITERATIONS = 5
+NODES = 1
+ITERATIONS = 10
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
 
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     model.save(MODEL_SAVE_PATH)
     del model
 
-    test_data = load_data('datasets/extended/validation/val_dataset.pickle')
+    test_data = load_data('datasets/reduced/validation/val_dataset.pickle')
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -64,8 +64,8 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            x_train, y_train = load_data('datasets/extended/test/split7/datasplit%04d.pickle' % (i%1))
-            #x_train, y_train = load_data('datasets/extended/test/split1/test_dataset.pickle')
+           #x_train, y_train = load_data('datasets/reduced/test/split7/datasplit%04d.pickle' % (i%1))
+            x_train, y_train = load_data('datasets/reduced/test/split1/test_dataset.pickle')
 
             # Train network
             print("training network")
