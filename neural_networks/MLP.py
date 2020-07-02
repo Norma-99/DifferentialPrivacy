@@ -5,7 +5,7 @@ import tensorflow as tf
 import numpy as np
 import random
 
-NODES = 1
+NODES = 3
 ITERATIONS = 5
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
@@ -64,8 +64,8 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            # x_train, y_train = load_data('datasets/extended/test/split3/datasplit%04d.pickle' % (i%1))
-            x_train, y_train = load_data('datasets/extended/test/split1/test_dataset.pickle')
+            x_train, y_train = load_data('datasets/extended/test/split3/datasplit%04d.pickle' % (i%1))
+            #x_train, y_train = load_data('datasets/extended/test/split1/test_dataset.pickle')
 
             # Train network
             print("training network")
