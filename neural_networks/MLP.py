@@ -6,7 +6,7 @@ import numpy as np
 import random
 
 NODES = 1
-ITERATIONS = 10
+ITERATIONS = 5
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
 
@@ -40,19 +40,18 @@ def get_ratio_thresh_delta(delta):
 if __name__ == "__main__":
     # Create network
     model = tf.keras.Sequential([
-    #tf.keras.layers.Flatten(input_shape=(87,)),
-    tf.keras.layers.Dense(1024, activation='relu', input_shape=(74,)),
+    #(87,) or (74,)
+    tf.keras.layers.Dense(1024, activation='relu', input_shape=(87,)),
     tf.keras.layers.Dense(810, activation='relu'), # 2/3 input + output
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dense(1, activation='sigmoid')
 ])
-    #Probar adam
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.summary()
     model.save(MODEL_SAVE_PATH)
     del model
 
-    test_data = load_data('datasets/Mod_val/val_dataset.pickle')
+    test_data = load_data('datasets/extended/validation/val_dataset.pickle')
 
     for iteration in range(int(ITERATIONS)):
         deltas = []
@@ -65,8 +64,8 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            # x_train, y_train = load_data('datasets/split1/datasplit%04d.pickle' % (i%1))
-            x_train, y_train = load_data('datasets/Mod_test/test_dataset.pickle')
+            # x_train, y_train = load_data('datasets/extended/test/split3/datasplit%04d.pickle' % (i%1))
+            x_train, y_train = load_data('datasets/extended/test/split1/test_dataset.pickle')
 
             # Train network
             print("training network")
