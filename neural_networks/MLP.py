@@ -41,7 +41,7 @@ if __name__ == "__main__":
     # Create network
     model = tf.keras.Sequential([
     #(87,) or (74,)
-    tf.keras.layers.Dense(1024, activation='relu', input_shape=(87,)),
+    tf.keras.layers.Dense(1024, activation='relu', input_shape=(74,)),
     tf.keras.layers.Dense(810, activation='relu'), # 2/3 input + output
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dense(1, activation='sigmoid')
