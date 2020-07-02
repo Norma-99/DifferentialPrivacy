@@ -39,7 +39,7 @@ def save_splits(splits):
     """Pickles the splits."""
     for index, split in enumerate(splits):
         save_str = 'datasplit%04d.pickle' % index
-        save_path = os.path.join('datasets/extended/test/split7', save_str)
+        save_path = os.path.join('datasets/extended/test/split3', save_str)
         with open(save_path, 'wb') as f:
             pickle.dump(split, f)
 
