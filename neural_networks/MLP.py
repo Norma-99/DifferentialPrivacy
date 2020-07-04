@@ -6,7 +6,7 @@ import numpy as np
 import random
 
 NODES = 3
-ITERATIONS = 10
+ITERATIONS = 5
 EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
 
