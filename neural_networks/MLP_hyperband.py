@@ -5,7 +5,7 @@ import pickle
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.optimizers import Adam
-import kerastuner as kt
+import keras-tuner as kt
 
 EPOCHS = 5 
 HIDDEN = 3
