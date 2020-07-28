@@ -1,5 +1,6 @@
 #This will import ADULT dataset and use Hyperband to decide which model is the most optimal for the dataset
 import argparse
+import json
 from functools import partial
 
 import pickle
@@ -36,22 +37,26 @@ if __name__ == "__main__":
     parser.add_argument('--config', required=True)
     args = parser.parse_args()
 
+    config = {}
+    with open(args.config) as conf_file:
+        config = json.load(conf_file)
+
     # Load data
     print("Loading data")
-    x_train, y_train = load_data(args.config['train_dataset'])
-    x_test, y_test = load_data(args.config['val_dataset'])
+    x_train, y_train = load_data(config['train_dataset'])
+    x_test, y_test = load_data(config['val_dataset'])
 
     tuner = kt.Hyperband(
-    partial(model_builder, x_train.shape[1:], args.config),
+    partial(model_builder, x_train.shape[1:], config),
     objective = 'val_accuracy',
-    max_epochs = args.config['epochs'],
+    max_epochs = config['epochs'],
     directory = 'result_dir',
-    project_name = args.config['project_name'])
+    project_name = config['project_name'])
 
     tuner.search(
         x_train,
         y_train,
-        epochs = args.config['epochs'],
+        epochs = config['epochs'],
         validation_data = (x_test, y_test))
 
     models = tuner.get_best_models(num_models=5)
