@@ -1,13 +1,13 @@
 #This will import ADULT dataset and create an MLP to train the Dataset
 #This is MLP with the geometric mean delta (later try the threshold)
-import pickle
+import argparse
+import json
+
+mport pickle
 import tensorflow as tf
 import numpy as np
 import random
 
-NODES = 1
-ITERATIONS = 10
-EPOCHS = 1
 MODEL_SAVE_PATH = 'temp_mlp.h5'
 
 
@@ -38,24 +38,32 @@ def get_ratio_thresh_delta(delta):
     return ratio_thresh_deltas
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', required=True)
+    args = parser.parse_args()
+
+    config = {}
+    with open(args.config) as conf_file:
+        config = json.load(conf_file)
+
     # Create network
     model = tf.keras.Sequential([
     #(87,) or (74,)
-    tf.keras.layers.Dense(1024, activation='relu', input_shape=(87,)),
-    tf.keras.layers.Dense(810, activation='relu'), # 2/3 input + output
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(1, activation='sigmoid')
+    tf.keras.layers.Dense(config['first_layer_units'], activation='relu', input_shape=(87,)),
+    tf.keras.layers.Dense(config['second_layer_units'], activation='relu'), # 2/3 input + output
+    tf.keras.layers.Dense(config['third_layer_units'], activation='relu'),
+    tf.keras.layers.Dense(config['sigmoid_layer_units'], activation='sigmoid')
 ])
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer=config['optimizer'], loss=config['loss'], metrics=['accuracy'])
     model.summary()
     model.save(MODEL_SAVE_PATH)
     del model
 
-    test_data = load_data('datasets/extended/validation/val_dataset.pickle')
+    test_data = load_data(config['val_dataset'])
 
-    for iteration in range(int(ITERATIONS)):
+    for iteration in range(int(config['iterations'])):
         deltas = []
-        for i in range(NODES):
+        for i in range(config['nodes']):
             
             # Copy net
             print("Copying net")
@@ -65,11 +73,11 @@ if __name__ == "__main__":
             # Load data
             print("Loading data")
             #x_train, y_train = load_data('datasets/extended/test/split7/datasplit%04d.pickle' % (i%1))
-            x_train, y_train = load_data('datasets/extended/test/split1/test_dataset.pickle')
+            x_train, y_train = load_data(config['train_dataset'])
 
             # Train network
             print("training network")
-            iteration_model.fit(x_train, y_train, epochs=EPOCHS)
+            iteration_model.fit(x_train, y_train, epochs=config['epochs'])
 
             # Save delta
             final_weights = iteration_model.get_weights()
