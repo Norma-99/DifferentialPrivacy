@@ -59,10 +59,6 @@ if __name__ == "__main__":
         epochs = config['epochs'],
         validation_data = (x_test, y_test))
 
-    models = tuner.get_best_models(num_models=5)
+    models = tuner.get_best_models(num_models=1)
     models[0].summary()
-    models[1].summary()
-    models[2].summary()
-    models[3].summary()
-    models[4].summary()
 
