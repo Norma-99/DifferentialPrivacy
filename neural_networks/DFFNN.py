@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # Create network
     model = tf.keras.Sequential([
     #(87,) or (74,)
-    tf.keras.layers.GaussianNoise(0.01, input_shape=(87,))
+    tf.keras.layers.GaussianNoise(0.01, input_shape=(87,)),
     tf.keras.layers.Dense(config['first_layer_units'], activation='relu'),
     tf.keras.layers.Dense(config['second_layer_units'], activation='relu'), # 2/3 input + output
     tf.keras.layers.Dense(config['third_layer_units'], activation='relu'),
