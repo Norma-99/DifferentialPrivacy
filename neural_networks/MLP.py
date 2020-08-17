@@ -73,7 +73,7 @@ if __name__ == "__main__":
             # Load data
             print("Loading data")
             #x_train, y_train = load_data('datasets/extended/test/split7/datasplit%04d.pickle' % (i%1))
-            x_train, y_train = load_data(config['train_dataset'] % i)
+            x_train, y_train = load_data(config['train_dataset'])
 
             # Train network
             print("training network")
