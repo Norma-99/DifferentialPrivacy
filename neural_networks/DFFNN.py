@@ -51,7 +51,7 @@ if __name__ == "__main__":
     #(87,) or (74,)
     tf.keras.layers.GaussianNoise(0.01, input_shape=(87,)),
     tf.keras.layers.Dense(config['first_layer_units'], activation='relu'),
-    tf.keras.layers.Dense(config['second_layer_units'], activation='relu'), # 2/3 input + output
+    tf.keras.layers.Dense(config['second_layer_units'], activation='relu'),
     tf.keras.layers.Dense(config['third_layer_units'], activation='relu'),
     tf.keras.layers.Dense(config['sigmoid_layer_units'], activation='sigmoid')
 ])
@@ -74,7 +74,7 @@ if __name__ == "__main__":
             # Load data
             print("Loading data")
             #x_train, y_train = load_data('datasets/extended/test/split7/datasplit%04d.pickle' % (i%1))
-            x_train, y_train = load_data(config['train_dataset'] % i)
+            x_train, y_train = load_data(config['train_dataset'] % i%5)
 
             # Train network
             print("training network")
