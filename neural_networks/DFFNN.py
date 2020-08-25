@@ -25,7 +25,7 @@ class DatasetSplitter:
         start = node_id * split_size
         end = start + split_size
 
-        return x[start:end], y[start:end]
+        return self.x[start:end], self.y[start:end]
 
 
 def load_data(path):
