@@ -25,9 +25,6 @@ def generate_splits(arg_dict):
 
     x, y = load_data('datasets/extended/test/split1/test_dataset.pickle')
 
-    #x = np.array(x) / 255
-    #y = tf.keras.utils.to_categorical(np.array(y))
-
     splits = list()
     for i in range(count):
         pair = x[i * size:(i + 1) * size], y[i * size:(i + 1) * size]

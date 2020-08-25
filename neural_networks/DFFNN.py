@@ -7,19 +7,38 @@ import pickle
 import tensorflow as tf
 import numpy as np
 import random
+import math
 
 MODEL_SAVE_PATH = 'temp_mlp.h5'
+DATASET_PATH = 'datasets/extended/test/test_dataset.pickle'
+
+class DatasetSplitter:
+
+    def __init__(self, path, nodes):
+        self.x, self.y = load_data(path)
+        self.nodes = nodes
+
+    def generate_split(self, node_id):
+        """Returns the splits acording to the specified arguments."""
+        split_size = math.floor(len(self.x) / self.nodes)
+        
+        start = node_id * split_size
+        end = start + split_size
+
+        return x[start:end], y[start:end]
 
 
 def load_data(path):
     with open(path, 'rb') as f:
         return pickle.load(f)
 
+
 def save_gradient(weights, gradient):
     iteration_deltas = []
     for inital_layer_weights, final_layer_weights in zip(weights, gradient):
         iteration_deltas.append(final_layer_weights - inital_layer_weights)
     return iteration_deltas
+
 
 def get_ratio_thresh_delta(delta):
     ratio_thresh_deltas = []
@@ -37,6 +56,7 @@ def get_ratio_thresh_delta(delta):
         ratio_thresh_deltas.append(random.uniform(layer_median_delta, layer_median_delta + layer_difference_delta))
     return ratio_thresh_deltas
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', required=True)
@@ -48,18 +68,18 @@ if __name__ == "__main__":
 
     # Create network
     model = tf.keras.Sequential([
-    #(87,) or (74,)
-    tf.keras.layers.GaussianNoise(0.01, input_shape=(87,)),
-    tf.keras.layers.Dense(config['first_layer_units'], activation='relu'),
-    tf.keras.layers.Dense(config['second_layer_units'], activation='relu'),
-    tf.keras.layers.Dense(config['third_layer_units'], activation='relu'),
-    tf.keras.layers.Dense(config['sigmoid_layer_units'], activation='sigmoid')
-])
+        tf.keras.layers.GaussianNoise(0.01, input_shape=(87,)),  #(87,) or (74,)
+        tf.keras.layers.Dense(config['first_layer_units'], activation='relu'),
+        tf.keras.layers.Dense(config['second_layer_units'], activation='relu'),
+        tf.keras.layers.Dense(config['third_layer_units'], activation='relu'),
+        tf.keras.layers.Dense(config['sigmoid_layer_units'], activation='sigmoid')
+    ])
     model.compile(optimizer=config['optimizer'], loss=config['loss'], metrics=['accuracy'])
     model.summary()
     model.save(MODEL_SAVE_PATH)
     del model
 
+    dataset_splitter = DatasetSplitter(path=DATASET_PATH, nodes=config['nodes'])
     test_data = load_data(config['val_dataset'])
 
     for iteration in range(int(config['iterations'])):
@@ -73,8 +93,7 @@ if __name__ == "__main__":
             
             # Load data
             print("Loading data")
-            #x_train, y_train = load_data('datasets/extended/test/split7/datasplit%04d.pickle' % (i%1))
-            x_train, y_train = load_data(config['train_dataset'] % (i%5))
+            x_train, y_train = dataset_splitter.generate_split(i)
 
             # Train network
             print("training network")
@@ -103,3 +122,5 @@ if __name__ == "__main__":
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
+
+
