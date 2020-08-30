@@ -2,12 +2,13 @@
 #This is MLP with the geometric mean delta (later try the threshold)
 import argparse
 import json
-
+import pandas as pd
 import pickle
 import tensorflow as tf
 import numpy as np
 import random
 import math
+from tensorflow.keras.metrics import AUC, FalseNegatives, FalsePositives, TrueNegatives, TruePositives
 
 MODEL_SAVE_PATH = 'temp_mlp.h5'
 DATASET_PATH = 'datasets/extended/test/test_dataset.pickle'
@@ -26,6 +27,23 @@ class DatasetSplitter:
         end = start + split_size
 
         return self.x[start:end], self.y[start:end]
+
+
+class ReportCallback:
+    def __init__(self):
+        self.results = list()
+        self.node = -1 #-1 validation node
+
+    def on_epoch_end(self, epoch, logs=None):
+        self.results.append({
+            'node': self.node,
+            'epoch': epoch,
+            **logs
+        })
+
+    def save(self, path):
+        df = pd.DataFrame(self.results)
+        df.to_csv(path)
 
 
 def load_data(path):
@@ -66,6 +84,8 @@ if __name__ == "__main__":
     with open(args.config) as conf_file:
         config = json.load(conf_file)
 
+    callback = ReportCallback()
+
     # Create network
     model = tf.keras.Sequential([
         tf.keras.layers.GaussianNoise(0.01, input_shape=(87,)),  #(87,) or (74,)
@@ -74,7 +94,7 @@ if __name__ == "__main__":
         tf.keras.layers.Dense(config['third_layer_units'], activation='relu'),
         tf.keras.layers.Dense(config['sigmoid_layer_units'], activation='sigmoid')
     ])
-    model.compile(optimizer=config['optimizer'], loss=config['loss'], metrics=['accuracy'])
+    model.compile(optimizer=config['optimizer'], loss=config['loss'], metrics=['accuracy', AUC(), FalseNegatives(), FalsePositives(), TrueNegatives(), TruePositives()])
     model.summary()
     model.save(MODEL_SAVE_PATH)
     del model
@@ -97,7 +117,8 @@ if __name__ == "__main__":
 
             # Train network
             print("training network")
-            iteration_model.fit(x_train, y_train, epochs=config['epochs'])
+            callback.node = i
+            iteration_model.fit(x_train, y_train, epochs=config['epochs'], callbacks=[callback])
 
             # Save delta
             final_weights = iteration_model.get_weights()
@@ -116,11 +137,11 @@ if __name__ == "__main__":
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
-        
-        metrics = model.evaluate(*test_data)
+        callback.node = -1 
+        metrics = model.evaluate(*test_data, callbacks=[callback])
         with open("executions/training_log_mlp.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
 
-
+    callback.save(config['result_path'])
