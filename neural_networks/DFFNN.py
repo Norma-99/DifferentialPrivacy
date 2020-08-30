@@ -29,7 +29,7 @@ class DatasetSplitter:
         return self.x[start:end], self.y[start:end]
 
 
-class ReportCallback:
+class ReportCallback(tf.keras.callbacks.Callback):
     def __init__(self):
         self.results = list()
         self.node = -1 #-1 validation node
