@@ -137,7 +137,11 @@ if __name__ == "__main__":
 
         # Save final model
         model.save(MODEL_SAVE_PATH)
+
+        #update callback
         callback.node = -1 
+        callback.on_epoch_end(iteration+1)
+
         metrics = model.evaluate(*test_data, callbacks=[callback])
         with open("executions/training_log_mlp.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
