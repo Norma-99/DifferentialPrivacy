@@ -33,11 +33,12 @@ class ReportCallback(tf.keras.callbacks.Callback):
     def __init__(self):
         self.results = list()
         self.node = -1 #-1 validation node
+        self.iteration = 0
 
     def on_epoch_end(self, epoch, logs=None):
         self.results.append({
             'node': self.node,
-            'epoch': epoch,
+            'iter': self.iteration,
             **logs
         })
 
@@ -140,12 +141,12 @@ if __name__ == "__main__":
 
         #update callback
         callback.node = -1 
-        #callback.on_epoch_end(iteration+1)
 
         metrics = model.evaluate(*test_data)
         with open("executions/training_log_mlp.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
         print(iteration, " model trained")
+        callback.iteration += 1
 
     callback.save(config['result_path'])
