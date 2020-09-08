@@ -142,7 +142,7 @@ if __name__ == "__main__":
         callback.node = -1 
         #callback.on_epoch_end(iteration+1)
 
-        metrics = model.evaluate(*test_data, callbacks=[callback])
+        metrics = model.evaluate(*test_data)
         with open("executions/training_log_mlp.csv", 'a') as f:
             f.write(','.join([str(val) for val in list(metrics)]))
         del model
