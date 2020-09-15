@@ -1,5 +1,5 @@
-#This will import ADULT dataset and create an MLP to train the Dataset
-#This is MLP with the geometric mean delta (later try the threshold)
+#This will import ADULT dataset and create an MLP/DFFNN to train the Dataset
+#This is MLP/DFFNN with the geometric mean delta (later try the threshold)
 import argparse
 import json
 import pandas as pd
@@ -126,7 +126,7 @@ if __name__ == "__main__":
             iteration_deltas = save_gradient(initial_weights, final_weights)
             deltas.append(iteration_deltas)
 
-        # Calculate gradient max
+        # Calculate gradient threshold
         ratio_thresh_delta = get_ratio_thresh_delta(deltas)
 
         # Apply deltas
