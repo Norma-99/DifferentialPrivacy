@@ -1,13 +1,14 @@
-def gradient_calc(initial, final):
-    iteration_deltas = []
-    for inital_layer_weights, final_layer_weights in zip(initial, final):
-        iteration_deltas.append(final_layer_weights - inital_layer_weights)
-    return iteration_deltas
+import numpy as np
 
-#mirar
+def gradient_calc(initial, final):
+    return np.subtract(final, initial)
+    
+
 def gradient_apply(weights, gradient):
-    new_weights = []
-    for layer_weights, layer_gradient in zip(weights, gradient):
-            new_weights.append(layer_weights + layer_gradient)
-    return new_weights
+    return np.add(weights, gradient)
+
+
+def gradient_median(gradients:list):
+    return np.median(gradients, axis=0)
+    
  

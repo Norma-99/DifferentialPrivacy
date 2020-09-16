@@ -1,8 +1,7 @@
 {
     "splits_path": "datasets/extended/test/test_dataset.pickle",
     "val_path": "datasets/extended/validation/val_dataset.pickle",
-    "result_path": "../Results/noNodes/noNodes",
-    "model_save_path": "noNodes_mlp.h5",
+    "result_path": "res.csv",
 
     "hidden_count": 3,
     "has_noise": false,

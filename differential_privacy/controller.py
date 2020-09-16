@@ -1,21 +1,12 @@
-import importlib
-from differential_privacy.dataset import Dataset
-from differential_privacy.utils import build_model
+from differential_privacy.server import Server
+from differential_privacy.experiment_params import ExperimentParams
+from differential_privacy.utils import read_config
 
 
 class Controller:
-    pass
+    def __init__(self, args):
+        config = read_config(args.config)
+        self.server = Server(ExperimentParams(config))
 
-
-class ExperimentParams:
-    def __init__(self, config:dict):
-        self.splits = Dataset.load_splits(config['splits_path'])
-        self.validation = Dataset.load_validation(config['val_path'])
-        self.epochs = config['epochs']
-        self.iterations = config['iterations']
-        self.model = build_model(config)
-        encryptor_name = config['encryptor_name']
-        lib = importlib.import_module(f'differential_privacy.encryptors.{encryptor_name}')
-        self.encryptor = lib.ExperimentEncryptor()
-
-
+    def run(self):
+        self.server.train()
