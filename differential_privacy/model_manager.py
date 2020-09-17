@@ -14,9 +14,11 @@ class ModelCloner:
             FalsePositives(), 
             TrueNegatives(), 
             TruePositives()]
+        self.input_units = config['layer0_units']
 
     def clone_model(self, model):
         cp_model = clone_model(model)
+        #cp_model.build(self.input_units)
         cp_model.compile(optimizer=self.optimizer, loss=self.loss, metrics=self.metrics)
         return cp_model
 
