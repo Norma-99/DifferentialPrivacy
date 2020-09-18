@@ -17,11 +17,12 @@ class Server:
         self.val_data = experiment_params.validation
         self.iterations = experiment_params.iterations
         self.log_callback = experiment_params.model_manager.model_fitter.callback
+        self.model_manager = experiment_params.model_manager
 
     def train(self):
         for iteration in range(self.iterations):
             self.log_callback.iteration = iteration
-            gradients = [fog_node.get_enc_gradient(clone_model(self.model)) for fog_node in self.fog_nodes] 
+            gradients = [fog_node.get_enc_gradient(self.model_manager.clone_model(self.model)) for fog_node in self.fog_nodes] 
             gradient = gradient_median(gradients)
             self.model.set_weights(gradient_apply(self.model.get_weights(), gradient))
             self.model.evaluate(*self.val_data.get(), verbose=0)
