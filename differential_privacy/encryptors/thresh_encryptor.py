@@ -11,7 +11,7 @@ class ExperimentEncryptor(Encryptor):
             layer_max_gradient = gradients[0][layer]
             for node in nodes:
                 layer_weights.append(gradients[node][layer])
-                layer_max_dgradient = np.maximum(layer_max_gradient, gradients[node][layer])
+                layer_max_gradient = np.maximum(layer_max_gradient, gradients[node][layer])
             #Define a random number between median and a 50% between median and maximun
             layer_median_gradient = np.median(layer_weights, axis=0)
             layer_difference_gradient = (layer_max_gradient - layer_median_gradient)/2

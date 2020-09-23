@@ -30,6 +30,10 @@ class ModelFitter:
     def fit(self, model, dataset:Dataset):
         model.fit(*dataset.get(), epochs=self.epochs, callbacks=[self.callback])
 
+    #Incorporación Norma
+    def evaluate(self, model, dataset:Dataset):
+        res = model.evaluate(*dataset.get(), callbacks=[self.callback], verbose=0, return_dict=True)
+        self.callback.on_epoch_end(-1, res)
 
 class ModelManager:
     def __init__(self, config:dict):
@@ -43,3 +47,7 @@ class ModelManager:
         self.model_fitter.callback.fog_node = fog_node.id
         self.model_fitter.callback.device = device.id
         self.model_fitter.fit(model, device.dataset)
+    
+    #Incorporación Norma
+    def evaluate(self, model, dataset):
+        self.model_fitter.evaluate(model, dataset)

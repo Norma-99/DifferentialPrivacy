@@ -18,5 +18,5 @@
     "iterations": 2,
     "fog_nodes": 1,
     "devices": 1, 
-    "epochs": 2
+    "epochs": 1
 }
