@@ -25,7 +25,5 @@ class Server:
             gradients = [fog_node.get_enc_gradient(self.model_manager.clone_model(self.model)) for fog_node in self.fog_nodes] 
             gradient = gradient_median(gradients)
             self.model.set_weights(gradient_apply(self.model.get_weights(), gradient))
-            #Incorporación Norma
             self.model_manager.evaluate(self.model, self.val_data)
-            #self.model.evaluate(*self.val_data.get(), verbose=0)
         self.log_callback.save()
