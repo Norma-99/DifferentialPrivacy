@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from differential_privacy.encryptor import Encryptor
 
 class ExperimentEncryptor(Encryptor):
