@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from differential_privacy.encryptor import Encryptor
 
 class ExperimentEncryptor(Encryptor):
