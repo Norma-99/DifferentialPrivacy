@@ -2,7 +2,7 @@ from .dataset import Dataset
 
 class DeviceDataset(Dataset):
     def __init__(self, x, y):
-        self.Dataset.__init__(self, x, y)
+        Dataset.__init__(self, x, y)
         self._device_id = None
 
     def get_device_id(self):
