@@ -10,4 +10,4 @@ class Device:
         Device.available_id += 1
         self.dataset = dataset
         self.dataset.set_device_id(self.id)
-        Device.logger.info(f'Created device {self.id}')
+        Device.logger.info('Created device %d', self.id)
