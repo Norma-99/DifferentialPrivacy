@@ -5,5 +5,4 @@ class Dataset:
     
     def get(self):
         return self.x, self.y
-
         

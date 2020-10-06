@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def gradient_calc(initial:list, final:list):
     return [np.subtract(layer_final_weights, layer_inital_weight)
             for layer_final_weights, layer_inital_weight in zip(final, initial)]
