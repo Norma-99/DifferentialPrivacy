@@ -1,2 +1,2 @@
 from .dataset import Dataset
-from .device_dataset import DeviceDataset
+from .splittable_dataset import SplittableDataset

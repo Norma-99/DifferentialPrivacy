@@ -1,0 +1,13 @@
+{
+  "server_config": {
+    "dataset_path": "datasets/extended/validation/val_dataset.pickle"
+  },
+  "fog_node_config": {
+    "device_count": 5,
+    "gradient_folder": "accuracy_gradient_folder"
+  },
+  "device_config": {
+    "dataset_path": ""
+  },
+  "fog_node_count": 3
+}
