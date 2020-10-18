@@ -16,4 +16,4 @@ class Device(NetworkComponent):
         self.fog_node_address = fog_node_address
 
     def send_data(self):
-        pass
+        self.send({'dataset': self.dataset}, self.fog_node_address)

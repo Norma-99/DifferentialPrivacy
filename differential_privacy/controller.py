@@ -17,7 +17,8 @@ class Controller:
         self.network: Network = Network()
         server = self._create_server(config['server_config'])
         fog_nodes = self._create_fog_nodes(config, server)
-        devices = self._create_devices(config, fog_nodes)
+        self.devices = self._create_devices(config, fog_nodes)
+        self.iterations = config['iterations']
 
     def _create_server(self, server_config: dict) -> Server:
         validation_dataset = Dataset.from_file(server_config['dataset_path'])
@@ -48,4 +49,6 @@ class Controller:
         return devices
 
     def run(self):
-        pass
+        for iteration in range(self.iterations):
+            for device in self.devices:
+                device.send_data()

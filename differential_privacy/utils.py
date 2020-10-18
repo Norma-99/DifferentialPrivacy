@@ -2,7 +2,7 @@ import json
 from tensorflow.keras.layers import GaussianNoise, Dense, InputLayer
 from tensorflow.keras.models import load_model, Sequential
 from tensorflow.keras.metrics import AUC, FalseNegatives, FalsePositives, TrueNegatives, TruePositives
-from differential_privacy.dataset import Dataset
+
 
 def read_config(path:str):
     with open(path) as conf_file:
@@ -10,7 +10,7 @@ def read_config(path:str):
 
 
 def build_model(config:dict):
-    model = Sequential([InputLayer(input_shape=(87,))]) #(87,) or (74,)
+    model = Sequential([InputLayer(input_shape=(87,))])  # (87,) or (74,)
     if config['has_noise']:
         model.add(GaussianNoise(config['noise_variance']))
     for i in range(config['hidden_count']):
