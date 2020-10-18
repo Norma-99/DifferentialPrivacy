@@ -23,7 +23,7 @@ def generate_splits(arg_dict):
     count = arg_dict.datacount
     samples = size * count
 
-    x, y = load_data('datasets/extended/test/split1/test_dataset.pickle')
+    x, y = load_data('datasets/extended/train/split1/train_dataset.pickle')
 
     splits = list()
     for i in range(count):
@@ -36,7 +36,7 @@ def save_splits(splits):
     """Pickles the splits."""
     for index, split in enumerate(splits):
         save_str = 'datasplit%04d.pickle' % index
-        save_path = os.path.join('datasets/extended/test/split3', save_str)
+        save_path = os.path.join('datasets/extended/train/split3', save_str)
         with open(save_path, 'wb') as f:
             pickle.dump(split, f)
 

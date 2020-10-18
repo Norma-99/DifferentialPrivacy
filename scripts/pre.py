@@ -61,7 +61,7 @@ x, y = x_dataset.values, y_dataset.values
 x = x / 255
 print(y.shape)
 
-#Separate values in test and validation
+#Separate values in train and validation
 val_pair = x[0 : round(SIZE*0.1)], y[0 : round(SIZE*0.1)]
 train_pair = x[round(SIZE*0.1) + 1 : round(SIZE*0.9)], y[round(SIZE*0.1) + 1 : round(SIZE*0.9)]
 
@@ -70,5 +70,5 @@ with open('datasets/Mod_val/val_dataset.pickle', 'wb') as f:
     pickle.dump(val_pair, f)
 
 #Save validation_dataset
-with open('datasets/Mod_test/test_dataset.pickle', 'wb') as f:
+with open('datasets/Mod_test/train_dataset.pickle', 'wb') as f:
     pickle.dump(train_pair, f)

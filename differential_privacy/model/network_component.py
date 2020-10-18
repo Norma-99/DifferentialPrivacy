@@ -27,7 +27,7 @@ class NetworkComponent:
     def on_data_receive(self, data: dict):
         logger.info('Received %s', str(data))
 
-    @classmethod
-    def _get_unique_address(cls):
-        cls._last_used_address += 1
-        return cls._last_used_address
+    @staticmethod
+    def _get_unique_address():
+        NetworkComponent._last_used_address += 1
+        return NetworkComponent._last_used_address

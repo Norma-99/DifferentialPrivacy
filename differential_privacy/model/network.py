@@ -1,4 +1,5 @@
 import logging
+from .network_component import NetworkComponent
 
 
 logger = logging.getLogger(__name__)
@@ -8,7 +9,7 @@ class Network:
     def __init__(self):
         self._components = {}
 
-    def add_component(self, component):
+    def add_component(self, component: NetworkComponent):
         component.set_network(self)
         self._components[component.get_address()] = component
 
