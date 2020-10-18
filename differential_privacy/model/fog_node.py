@@ -27,14 +27,6 @@ class FogNode(NetworkComponent):
             if self._has_all_gradients():
                 self.on_iteration_end()
 
-        """
-        self.gradient_folder.add_subdataset(data)
-        neural_network = self.server.request_model()
-        gradient = neural_network.fit(data)
-        self.gradients.append(gradient)
-        if self._has_all_gradients():
-            self.on_iteration_end()"""
-
     def _process_dataset(self, data: dict):
         self.current_dataset = data['dataset']
         self.current_device = data['origin']
