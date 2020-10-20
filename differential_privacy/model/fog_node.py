@@ -9,13 +9,13 @@ logger = logging.getLogger(__name__)
 class FogNode(NetworkComponent):
     def __init__(self, device_count: int, gradient_folder):
         NetworkComponent.__init__(self)
-        self.device_count = device_count
-        self.gradient_folder = gradient_folder
-        self.server_address = None
-        self.gradients = []
-        self.dataset_fragments = {}
-        self.current_dataset: Dataset = Dataset(None, None)
-        self.current_device = None
+        self._device_count: int = device_count
+        self._gradient_folder = gradient_folder
+        self._server_address: int = 0
+        self._gradients: List[Gradient] = []
+        self._generalization_dataset = {}
+        self._current_dataset: Dataset = Dataset(None, None)
+        self._current_device: int = None
 
     def on_data_receive(self, data: dict):
         logger.debug("Received %s", str(data))
