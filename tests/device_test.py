@@ -1,6 +1,7 @@
 import unittest
 import numpy as np
 from differential_privacy.dataset import Dataset
+from differential_privacy.model import Network, NetworkComponent, Device
 
 
 X_SHAPE = (10, 87)
