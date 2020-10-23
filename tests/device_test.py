@@ -25,7 +25,7 @@ class DeviceTestCase(unittest.TestCase):
         self.device = Device(self.dataset)
         self._set_up_network()
 
-    def _set_up_network(self)
+    def _set_up_network(self):
         self.device.set_fog_node(checker.get_address())
         self.network.add_component(self.device)
         self.network.add_component(self.checker)
