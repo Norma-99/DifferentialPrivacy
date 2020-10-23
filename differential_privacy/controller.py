@@ -1,6 +1,6 @@
 import logging
 from typing import List
-from differential_privacy.datasets import Dataset
+from differential_privacy.dataset import Dataset
 from differential_privacy.model.server import Server
 from differential_privacy.factories.fog_node_factory import FogNodeFactory
 from differential_privacy.factories.device_factory import DeviceFactory

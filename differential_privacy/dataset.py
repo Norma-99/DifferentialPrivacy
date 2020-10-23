@@ -1,5 +1,5 @@
 import pickle
-
+import typing
 
 class Dataset:
     def __init__(self, x, y):
@@ -8,6 +8,9 @@ class Dataset:
     
     def get(self):
         return self.x, self.y
+
+    def get_split(index: int, split_count: int) -> Dataset:
+        pass
 
     @staticmethod
     def from_file(path: str):

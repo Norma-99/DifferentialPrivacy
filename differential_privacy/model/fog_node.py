@@ -1,6 +1,6 @@
 import logging
 from .network_component import NetworkComponent
-from differential_privacy.datasets import Dataset
+from differential_privacy.dataset import Dataset
 
 
 logger = logging.getLogger(__name__)

@@ -1,4 +1,4 @@
-from differential_privacy.datasets import Dataset
+from differential_privacy.dataset import Dataset
 from .network_component import NetworkComponent
 
 

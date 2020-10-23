@@ -1,6 +1,6 @@
 from .gradient_folder import GradientFolder
 
-class AccuracyGradientFolder(GradientFolder):
+class PonderatedGradientFolder(GradientFolder):
     def __init__(self):
         GradientFolder.__init__(self)
         self.network = None
