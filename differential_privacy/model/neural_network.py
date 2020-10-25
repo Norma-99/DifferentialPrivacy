@@ -1,8 +1,7 @@
 import typing
 import tensorflow as tf
-from differential_privacy.datasets.device_dataset import DeviceDataset
-from differential_privacy.gradient_operations import gradient_calc
 from differential_privacy.dataset import Dataset
+from differential_privacy.gradient import Gradient
 
 
 class NeuralNetwork:
@@ -11,11 +10,11 @@ class NeuralNetwork:
         self.epochs: int = epochs
         self.validation_dataset: Dataset = validation_dataset
 
-    def fit(self, data:DeviceDataset) -> list:
+    def fit(self, data:Dataset) -> list:
         initial_weights = self.tf_model.get_weights()
         self.tf_model.fit(*data.get(), epochs=self.epochs)  # TODO: Add callback
         final_weights = self.tf_model.get_weights()
-        return gradient_calc(initial_weights, final_weights)
+        return Gradient.from_delta(initial_weights, final_weights)
 
     def clone(self):
         # Returns a NeuralNetwork

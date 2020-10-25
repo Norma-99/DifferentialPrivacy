@@ -6,7 +6,7 @@ class Gradient:
         self._layer_deltas: List[np.ndarray] = layer_deltas
 
     @staticmethod
-    def from_delta(initial_weights: List[np.ndarray], final_weights: List[np.ndarray]) -> Gradient:
+    def from_delta(initial_weights: List[np.ndarray], final_weights: List[np.ndarray]):
         pass
 
     def apply(weights: List[np.ndarray]) -> List[np.ndarray]:
