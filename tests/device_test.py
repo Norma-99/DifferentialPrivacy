@@ -1,7 +1,9 @@
 import unittest
 import numpy as np
 from differential_privacy.dataset import Dataset
-from differential_privacy.model import Network, NetworkComponent, Device
+from differential_privacy.model.network import Network
+from differential_privacy.model.network_component import NetworkComponent
+from differential_privacy.model.device import Device
 
 
 X_SHAPE = (10, 87)
@@ -26,13 +28,13 @@ class DeviceTestCase(unittest.TestCase):
         self._set_up_network()
 
     def _set_up_network(self):
-        self.device.set_fog_node(checker.get_address())
+        self.device.set_fog_node(self.checker.get_address())
         self.network.add_component(self.device)
         self.network.add_component(self.checker)
 
     def test_dataset_sending(self):
         self.checker.send({}, self.device.get_address())
-        self.assertEquals(self.dataset, checker.dataset)
+        self.assertEquals(self.dataset, self.checker.dataset)
 
 
 if __name__ == '__main__':

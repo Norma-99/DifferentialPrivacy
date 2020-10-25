@@ -9,7 +9,7 @@ class Dataset:
     def get(self):
         return self.x, self.y
 
-    def get_split(index: int, split_count: int) -> Dataset:
+    def get_split(index: int, split_count: int):
         pass
 
     @staticmethod
