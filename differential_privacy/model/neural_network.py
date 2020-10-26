@@ -1,4 +1,5 @@
 import typing
+from typing import Dict
 import tensorflow as tf
 from differential_privacy.dataset import Dataset
 from differential_privacy.gradient import Gradient
