@@ -40,7 +40,6 @@ class FogNode(NetworkComponent):
 
     def _train_network(self, neural_network: NeuralNetwork):
         neural_network.fit(self._current_dataset)
-        pass
 
     def set_server(self, server_address: int):
         self.server_address = server_address
