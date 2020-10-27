@@ -11,7 +11,7 @@ class NeuralNetwork:
         self.epochs: int = epochs
         self.validation_dataset: Dataset = validation_dataset
 
-    def fit(self, data:Dataset) -> list:
+    def fit(self, data:Dataset) -> Gradient:
         initial_weights = self.tf_model.get_weights()
         self.tf_model.fit(*data.get(), epochs=self.epochs)  # TODO: Add callback
         final_weights = self.tf_model.get_weights()
