@@ -3,6 +3,9 @@ from .network_component import NetworkComponent
 
 
 class Server(NetworkComponent):
+
+    DATASET_REQUEST = 'neural_network_request'
+
     def __init__(self, validation_dataset: Dataset):
         NetworkComponent.__init__(self)
         self.validation_dataset = validation_dataset

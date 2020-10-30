@@ -10,13 +10,13 @@ class Dataset:
         return self.x, self.y
     
     # Cambiarlo
-    def get_split(index: int, split_count: int):
+    def get_split(self, index: int, split_count: int):
         pass
 
     #Propongo hacer un método get_generalisation_fragment que te de el split de cada dataset
-    def get_generalisation_fragment(fraction: int):
+    def get_generalisation_fragment(self, fraction: int):
         fragment_size = len(self.x) // fraction
-        return Dataset(x[:fragment_size], y[:fragment_size])
+        return Dataset(self.x[:fragment_size], self.y[:fragment_size])
 
     @staticmethod
     def from_file(path: str):

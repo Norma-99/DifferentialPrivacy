@@ -34,9 +34,9 @@ class FogNode(NetworkComponent):
     def _process_dataset(self, data: dict):
         self._current_dataset = data['dataset']
         self._current_device = data['origin']
-        logger.info('Processed dataset from %d', self.current_device)
+        logger.info('Processed dataset from %d', self._current_device)
         self._save_generalisation_fragment()
-        self.send({'type': 'neural_network_request'}, self.server_address)
+        self.send({}, self.server_address)
 
     def _train_network(self, neural_network: NeuralNetwork):
         self._gradients.append(neural_network.fit(self._current_dataset))
