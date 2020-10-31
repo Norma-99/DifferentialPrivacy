@@ -1,5 +1,5 @@
 import pickle
-import typing
+import numpy as np
 
 class Dataset:
     def __init__(self, x, y):
@@ -8,15 +8,18 @@ class Dataset:
     
     def get(self):
         return self.x, self.y
-    
-    # Cambiarlo
-    def get_split(self, index: int, split_count: int):
-        pass
 
-    #Propongo hacer un método get_generalisation_fragment que te de el split de cada dataset
+    def get_split(self, index: int, split_count: int):
+        size = len(self.x) // split_count
+        start = index * size
+        end = start + size
+        return Dataset(self.x[start:end], self.y[start:end])
+
     def get_generalisation_fragment(self, fraction: int):
-        fragment_size = len(self.x) // fraction
-        return Dataset(self.x[:fragment_size], self.y[:fragment_size])
+        return self.get_split(0, fraction)
+
+    def __eq__(self, other):
+        return np.sum(self.x - other.x) == 0 and np.sum(self.y - other.y) == 0
 
     @staticmethod
     def from_file(path: str):
