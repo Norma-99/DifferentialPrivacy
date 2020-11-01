@@ -2,21 +2,21 @@ import logging
 from .network_component import NetworkComponent
 from .neural_network import NeuralNetwork
 from differential_privacy.dataset import Dataset
-
+from differential_privacy.factories.gradient_factory import GradientFactory
 
 logger = logging.getLogger(__name__)
 
 
 class FogNode(NetworkComponent):
-    def __init__(self, device_count: int, gradient_folder):
+    def __init__(self, device_count: int, gradient_folder_name):
         NetworkComponent.__init__(self)
         self._device_count: int = device_count
-        self._gradient_folder = gradient_folder
+        self._gradient_folder_name = gradient_folder_name
         self._server_address: int = 0
         self._gradients: List[Gradient] = []
         self._generalization_dataset = {}
         self._current_dataset: Dataset = Dataset(None, None)
-        self._current_device: int = None
+        self._current_device_counter: int = 0
 
     def on_data_receive(self, data: dict):
         logger.debug("Received %s", str(data))
@@ -28,13 +28,12 @@ class FogNode(NetworkComponent):
                 self.on_iteration_end(data['neural_network'])
 
     def _save_generalisation_fragment(self):
-        self._generalization_dataset[self._current_device] = self._current_dataset.get_generalisation_fragment(self._device_count)
-        self._current_device = self._current_device + 1
+        self._current_device_counter = self._current_device_counter + 1
+        self._generalization_dataset[self._current_device_counter] = self._current_dataset.get_generalisation_fragment(self._current_device_counter)
 
     def _process_dataset(self, data: dict):
         self._current_dataset = data['dataset']
-        self._current_device = data['origin']
-        logger.info('Processed dataset from %d', self._current_device)
+        logger.info('Processed dataset from %d', self._current_device_counter)
         self._save_generalisation_fragment()
         self.send({}, self.server_address)
 
@@ -45,9 +44,10 @@ class FogNode(NetworkComponent):
         self.server_address = server_address
 
     def on_iteration_end(self, neural_network: NeuralNetwork):
-        gradient = self.gradient_folder.fold(neural_network, self.gradients)
-        self.gradients.clear()
-        self.send(gradient, self.server_address)
+        gradient_folder = GradientFactory.from_name(self._gradient_folder_name, self._generalization_dataset)
+        gradient = gradient_folder.fold(neural_network, self._gradients)
+        self._gradients.clear()
+        self.send({'gradient': gradient}, self.server_address)
 
     def _has_all_gradients(self):
-        return len(self._current_device) == self.device_count
+        return self._current_device_counter == self._device_count

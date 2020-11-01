@@ -54,7 +54,7 @@ class IterationCheckerServerStub(Server):
 class FogNodeTestCase(unittest.TestCase):
     def setUp(self):
         self.fog_node_count = 2
-        self.fog_node = FogNode(self.fog_node_count, gradient_folder='pass')
+        self.fog_node = FogNode(self.fog_node_count, gradient_folder_name='pass')
         self.network = Network()
         self.network.add_component(self.fog_node)
         self.device_stubs = self._create_device_stubs()

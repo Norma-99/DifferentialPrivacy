@@ -1,7 +1,11 @@
+import typing
+from typing import List
+from differential_privacy.dataset import Dataset
 from .gradient_folder import GradientFolder
 
 class PonderatedGradientFolder(GradientFolder):
-    def __init__(self):
+    def __init__(self, generalisation_dataset: Dataset):
+        self.generalisation_dataset = generalisation_dataset
         GradientFolder.__init__(self)
         self.network = None
 

@@ -1,0 +1,5 @@
+from .gradient_folder import GradientFolder
+from .mean_gradient_folder import MeanGradientFolder
+from .pass_gradient_folder import PassGradientFolder
+from .ponderated_gradient_folder import PonderatedGradientFolder
+from .threshold_gradient_folder import ThresholdGradientFolder 

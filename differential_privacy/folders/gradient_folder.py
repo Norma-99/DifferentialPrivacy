@@ -1,15 +1,13 @@
-import typing
+from typing import List
 from differential_privacy.gradient import Gradient
-from differential_privacy.datasets import Dataset
+from differential_privacy.dataset import Dataset
+
 
 class GradientFolder:
     def __init__(self):
         self.generalization_dataset = GeneralizationDataset()
 
-    def fold(self, gradients: List[Gradient]) -> Gradient:
+    def fold(self, neural_network, gradients: List[Gradient]) -> Gradient:
         raise NotImplementedError()
 
-    @staticmethod
-    def from_name(name: str, generalisation_dataset: Dataset):
-        # Returns GradientFolder
-        pass
+    
