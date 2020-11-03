@@ -1,23 +1,16 @@
-from differential_privacy.dataset import Dataset
-from .network_component import NetworkComponent
+from . import NetworkComponent, NeuralNetwork
 
 
 class Server(NetworkComponent):
-
-    DATASET_REQUEST = 'neural_network_request'
-
-    def __init__(self, validation_dataset: Dataset):
+    def __init__(self, neural_network:NeuralNetwork):
         NetworkComponent.__init__(self)
-        self.validation_dataset = validation_dataset
+        self.neural_network = neural_network
 
     def on_data_receive(self, data: dict):
         if 'gradient' in data:
-            # O bien recibe los pesos del modelo ya entrenado
-            pass
-        else: 
-            # O bien recibe petición del modelo
-            pass
-
+            self.neural_network.apply_gradient(data['gradient'])
+        else:
+            self.send({'neural_network': self.neural_network.clone()}, data['origin'])
 
     def _process_dataset_request(data: dict):
         pass
