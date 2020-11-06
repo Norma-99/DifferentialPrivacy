@@ -26,7 +26,7 @@ class Gradient:
         return Gradient([gradient * other for gradient in self.get()])
 
     def __eq__(self, other):
-        return sum(map(np.sum, (self - other).get())) == 0
+        return sum(map(np.sum, (self - other).get())) < 0.0001
 
     def get(self) -> List[np.ndarray]:
         return self._layer_deltas

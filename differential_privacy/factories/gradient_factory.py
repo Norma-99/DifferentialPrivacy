@@ -5,13 +5,12 @@ from differential_privacy.folders import GradientFolder, PassGradientFolder, Mea
 
 class GradientFactory:
     @staticmethod
-    def from_name(name: str, generalisation_dataset: Dataset):
+    def from_name(name: str, **kwargs):
         if name == 'mean':
-            return MeanGradientFolder(generalisation_dataset)
+            return MeanGradientFolder()
         elif name == 'ponderated':
-            return PonderatedGradientFolder(generalisation_dataset)
+            return PonderatedGradientFolder(**kwargs)
         elif name == 'threshold':
-            return ThresholdGradientFolder(generalisation_dataset)
+            return ThresholdGradientFolder()
         elif name == 'pass': 
-            return PassGradientFolder(generalisation_dataset)
-            
+            return PassGradientFolder()
