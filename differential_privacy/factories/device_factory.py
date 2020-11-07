@@ -1,12 +1,12 @@
 from typing import List
 from differential_privacy.model.device import Device
-from differential_privacy.datasets import Dataset, SplittableDataset
+from differential_privacy.dataset import Dataset
 
 
 class DeviceFactory:
     def __init__(self, device_config: dict):
         dataset_path = device_config['splittable_dataset']
-        self.dataset = SplittableDataset.from_dataset(Dataset.from_file(dataset_path))
+        self.dataset = Dataset.from_file(dataset_path)
 
     def create_devices(self, device_count) -> List[Device]:
         devices = []

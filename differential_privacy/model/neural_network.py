@@ -7,7 +7,7 @@ from differential_privacy.gradient import Gradient
 
 class NeuralNetwork:
     def __init__(self, tf_model, epochs, validation_dataset):
-        self.tf_model: tf.keras.model = tf_model
+        self.tf_model: tf.keras.Model = tf_model
         self.epochs: int = epochs
         self.validation_dataset: Dataset = validation_dataset
 
@@ -18,11 +18,16 @@ class NeuralNetwork:
         return Gradient.from_delta(initial_weights, final_weights)
 
     def clone(self):
-        # Returns a NeuralNetwork
-        pass
+        new_model = tf.keras.models.clone_model(self.tf_model)
+        new_model.set_weights(self.tf_model.get_weights())
+        return NeuralNetwork(new_model, self.epochs, self.validation_dataset)
 
-    def evaluate(self) -> Dict[str, float]:
-        pass
+    def evaluate(self, dataset: Dataset = None) -> Dict[str, float]:
+        if dataset is not None:
+            return self.tf_model.evaluate(*dataset.get(), return_dict=True)
+        return self.tf_model.evaluate(*self.validation_dataset.get())
 
     def apply_gradient(self, gradient: Gradient):
-        pass
+        self.tf_model.set_weights(
+            (Gradient(self.tf_model.get_weights()) + gradient).get()
+        )
