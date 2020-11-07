@@ -1,12 +1,11 @@
 import logging
+import tensorflow as tf
 from typing import List
 from differential_privacy.dataset import Dataset
 from differential_privacy.model.server import Server
 from differential_privacy.factories.fog_node_factory import FogNodeFactory
 from differential_privacy.factories.device_factory import DeviceFactory
-from differential_privacy.model.device import Device
-from differential_privacy.model.fog_node import FogNode
-from differential_privacy.model.network import Network
+from differential_privacy.model import *
 
 
 logger = logging.getLogger(__name__)
@@ -15,14 +14,18 @@ logger = logging.getLogger(__name__)
 class Controller:
     def __init__(self, config):
         self.network: Network = Network()
-        server = self._create_server(config['server_config'])
+        server = self._create_server(config['server_config'], config['fog_node_count'])
         fog_nodes = self._create_fog_nodes(config, server)
         self.devices = self._create_devices(config, fog_nodes)
         self.iterations = config['iterations']
 
-    def _create_server(self, server_config: dict) -> Server:
+    def _create_server(self, server_config: dict, fog_node_count: int) -> Server:
         validation_dataset = Dataset.from_file(server_config['dataset_path'])
-        server = Server(validation_dataset)
+        tf_model = None
+        with open(server_config['model_path'], 'r') as json_file:
+            tf_model = tf.keras.models.model_from_json(json_file.read())
+        neural_network = NeuralNetwork(tf_model, server_config['epochs'], validation_dataset)
+        server = Server(neural_network, fog_node_count)
         self.network.add_component(server)
         logger.info('Server created at %d', server.get_address())
         return server

@@ -7,7 +7,7 @@ from differential_privacy.gradient import Gradient
 
 class NeuralNetwork:
     def __init__(self, tf_model, epochs, validation_dataset):
-        self.tf_model: tf.keras.Model = tf_model
+        self.tf_model: tf.keras.Model = tf_model # TODO: compile
         self.epochs: int = epochs
         self.validation_dataset: Dataset = validation_dataset
 

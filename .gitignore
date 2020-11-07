@@ -1,4 +1,4 @@
-/.vscode**
+.vscode
 *.py[oc]
 **__pycache__**
 .DS_Store

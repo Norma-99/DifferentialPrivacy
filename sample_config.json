@@ -1,6 +1,8 @@
 {
   "server_config": {
-    "dataset_path": "datasets/extended/validation/val_dataset.pickle"
+    "dataset_path": "datasets/extended/validation/val_dataset.pickle",
+    "model_path": "test_net.json",
+    "epochs": 1
   },
   "fog_node_config": {
     "device_count": 5,
