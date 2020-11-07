@@ -16,8 +16,8 @@ class FogNodeStub(NetworkComponent):
     def send_request(self):
         self.send({}, self.server_address)
 
-    def send_weights(self):
-        self.send({'gradient': Gradient(GRADIENT_DATA)}, self.server_address)
+    def send_weights(self, value):
+        self.send({'gradient': Gradient(GRADIENT_DATA)*value}, self.server_address)
 
     def on_data_receive(self, data: dict):
         if 'neural_network' in data:
@@ -44,23 +44,36 @@ class NeuralNetworkStub:
 class ServerTest(unittest.TestCase):
     def setUp(self) -> None:
         self.neural_network = NeuralNetworkStub()
-        self.server = Server(self.neural_network)
-        self.fog_node_stub = FogNodeStub(self.server.get_address())
+        self.server = Server(self.neural_network, 2)
+        self.fog_node_stubs = [FogNodeStub(self.server.get_address()) for _ in range(2)]
         self.network = Network()
         self.network.add_component(self.server)
-        self.network.add_component(self.fog_node_stub)
+        for fog_node_stub in self.fog_node_stubs:
+            self.network.add_component(fog_node_stub)
 
     def test_network_sending(self):
-        self.fog_node_stub.send_request()
-        self.assertIsNotNone(self.fog_node_stub.network_received)
+        self.fog_node_stubs[0].send_request()
+        self.assertIsNotNone(self.fog_node_stubs[0].network_received)
 
     def test_iteration_end(self):
-        self.fog_node_stub.send_request()
-        initial_weights = self.fog_node_stub.network_received.weights
-        self.fog_node_stub.send_weights()
-        self.fog_node_stub.send_request()
-        final_weights = self.fog_node_stub.network_received.weights
-        self.assertEqual(final_weights, initial_weights + Gradient(GRADIENT_DATA))
+        # Coger pesos iniciales
+        self.fog_node_stubs[0].send_request()
+        initial_weights = self.fog_node_stubs[0].network_received.weights
+
+        # Enviar primer gradiente
+        self.fog_node_stubs[0].send_weights(0)
+
+        # Comprobar que sigue teniendo los mismos pesos
+        self.fog_node_stubs[1].send_request()
+        self.assertEqual(self.fog_node_stubs[1].network_received.weights, initial_weights)
+
+        # Enviar segundo gradiente
+        self.fog_node_stubs[1].send_weights(2)
+
+        # Comprobar que tiene los pesos finales esperados
+        self.fog_node_stubs[0].send_request()
+        final_weights = self.fog_node_stubs[0].network_received.weights
+        self.assertEqual(final_weights - initial_weights, Gradient(GRADIENT_DATA))
 
 
 if __name__ == '__main__':
