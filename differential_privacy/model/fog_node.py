@@ -55,6 +55,7 @@ class FogNode(NetworkComponent):
             neural_network=neural_network)
         gradient = gradient_folder.fold(self._gradients)
         self._gradients.clear()
+        self._current_device_counter = 0
         self.send({'gradient': gradient}, self.server_address)
 
     def _has_all_gradients(self):
