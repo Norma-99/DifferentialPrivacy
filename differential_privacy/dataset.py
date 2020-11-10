@@ -21,6 +21,9 @@ class Dataset:
     def __eq__(self, other):
         return np.sum(self.x - other.x) == 0 and np.sum(self.y - other.y) == 0
 
+    def __repr__(self):
+        return f'Dataset({self.x.shape}, {self.y.shape})'
+
     @staticmethod
     def from_file(path: str):
         with open(path, 'rb') as f:

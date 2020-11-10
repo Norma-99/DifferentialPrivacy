@@ -21,3 +21,4 @@ class Server(NetworkComponent):
             gradient = GradientFactory.from_name('mean').fold(self.gradients)
             self.gradients.clear()
             self.neural_network.apply_gradient(gradient)
+            self.neural_network.save_trace(self.get_address())

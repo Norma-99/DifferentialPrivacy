@@ -1,7 +1,9 @@
 import logging
+from typing import List
 from .network_component import NetworkComponent
 from .neural_network import NeuralNetwork
 from differential_privacy.dataset import Dataset
+from differential_privacy.gradient import Gradient
 from differential_privacy.factories.gradient_factory import GradientFactory
 
 logger = logging.getLogger(__name__)
@@ -15,12 +17,14 @@ class FogNode(NetworkComponent):
         self._server_address: int = 0
         self._gradients: List[Gradient] = []
         self._generalization_dataset = {}
+        self._current_device: int = 0
         self._current_dataset: Dataset = Dataset(None, None)
         self._current_device_counter: int = 0
 
     def on_data_receive(self, data: dict):
         logger.debug("Received %s", str(data))
         if 'dataset' in data:
+            self._current_device = data['origin']
             self._process_dataset(data)
         elif 'neural_network' in data:
             self._train_network(data['neural_network'])
@@ -39,13 +43,17 @@ class FogNode(NetworkComponent):
 
     def _train_network(self, neural_network: NeuralNetwork):
         self._gradients.append(neural_network.fit(self._current_dataset))
+        neural_network.save_trace(self._current_device)
 
     def set_server(self, server_address: int):
         self.server_address = server_address
 
     def on_iteration_end(self, neural_network: NeuralNetwork):
-        gradient_folder = GradientFactory.from_name(self._gradient_folder_name, self._generalization_dataset)
-        gradient = gradient_folder.fold(neural_network, self._gradients)
+        gradient_folder = GradientFactory.from_name(
+            self._gradient_folder_name,
+            dataset=self._generalization_dataset,
+            neural_network=neural_network)
+        gradient = gradient_folder.fold(self._gradients)
         self._gradients.clear()
         self.send({'gradient': gradient}, self.server_address)
 
