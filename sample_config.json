@@ -6,12 +6,12 @@
     "epochs": 1
   },
   "fog_node_config": {
-    "device_count": 5,
-    "gradient_folder": "mean"
+    "device_count": 2,
+    "gradient_folder": "ponderated"
   },
   "device_config": {
     "splittable_dataset": "datasets/extended/train/train_dataset.pickle"
   },
-  "fog_node_count": 3,
-  "iterations": 5
+  "fog_node_count": 2,
+  "iterations": 15
 }

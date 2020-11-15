@@ -26,7 +26,8 @@ class NeuralNetwork:
 
     def evaluate(self, dataset: Dataset = None) -> Dict[str, float]:
         if dataset is not None:
-            return self.tf_model.evaluate(*dataset.get(), return_dict=True)
+            x, y = dataset.get()
+            return self.tf_model.evaluate(x, y, return_dict=True)
         return self.tf_model.evaluate(*self.validation_dataset.get(), return_dict=True)
 
     def save_trace(self, trace_id: int):

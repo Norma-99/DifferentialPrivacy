@@ -3,3 +3,4 @@ from .mean_gradient_folder import MeanGradientFolder
 from .pass_gradient_folder import PassGradientFolder
 from .ponderated_gradient_folder import PonderatedGradientFolder
 from .threshold_gradient_folder import ThresholdGradientFolder 
+from .hybrid_gradient_folder import HybridGradientFolder

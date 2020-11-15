@@ -1,3 +1,4 @@
+import os
 from typing import List
 from differential_privacy.dataset import Dataset
 from differential_privacy.model.neural_network import NeuralNetwork
@@ -5,7 +6,12 @@ from differential_privacy.gradient import Gradient
 from .gradient_folder import GradientFolder
 
 
-class PonderatedGradientFolder(GradientFolder):
+FLOAT_BYTES = 4
+RANDOM_MIN = 0.95
+RANDOM_MAX = 1.05
+
+
+class HybridGradientFolder(GradientFolder):
     def __init__(self, neural_network: NeuralNetwork, dataset: Dataset):
         self.generalisation_dataset = dataset
         self.network = neural_network
@@ -16,7 +22,9 @@ class PonderatedGradientFolder(GradientFolder):
         grades = [grade / grade_sum for grade in grades]
         result = gradients[0] * 0
         for gradient, grade in zip(gradients, grades):
-            result += gradient * grade
+            random_uniform = int(os.urandom(FLOAT_BYTES), base=16) / 2 ** (FLOAT_BYTES * 8)
+            random_multiplier = random_uniform * (RANDOM_MAX - RANDOM_MIN) + RANDOM_MIN
+            result += gradient * grade * random_multiplier
         return result
 
     def _evaluate_gradient(self, gradient):

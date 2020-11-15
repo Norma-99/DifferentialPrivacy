@@ -1,4 +1,4 @@
-from differential_privacy.folders import GradientFolder, PassGradientFolder, MeanGradientFolder, PonderatedGradientFolder, ThresholdGradientFolder
+from differential_privacy.folders import GradientFolder, PassGradientFolder, MeanGradientFolder, PonderatedGradientFolder, ThresholdGradientFolder, HybridGradientFolder
 
 
 class GradientFactory:
@@ -12,4 +12,6 @@ class GradientFactory:
             return ThresholdGradientFolder()
         elif name == 'pass': 
             return PassGradientFolder()
+        elif name == 'hybrid':
+            return HybridGradientFolder(**kwargs)
         raise ValueError('Folder not found')

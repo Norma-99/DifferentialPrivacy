@@ -28,3 +28,12 @@ class Dataset:
     def from_file(path: str):
         with open(path, 'rb') as f:
             return Dataset(*pickle.load(f))
+
+    @staticmethod
+    def join(datasets: dict):
+        xs, ys = [], []
+        for dataset in datasets.values():
+            x, y = dataset.get()
+            xs.append(x)
+            ys.append(y)
+        return Dataset(np.concatenate(xs, axis=0), np.concatenate(ys, axis=0))

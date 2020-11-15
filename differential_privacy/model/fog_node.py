@@ -16,7 +16,7 @@ class FogNode(NetworkComponent):
         self._gradient_folder_name = gradient_folder_name
         self._server_address: int = 0
         self._gradients: List[Gradient] = []
-        self._generalization_dataset = {}
+        self._generalization_datasets = {}
         self._current_device: int = 0
         self._current_dataset: Dataset = Dataset(None, None)
         self._current_device_counter: int = 0
@@ -33,7 +33,7 @@ class FogNode(NetworkComponent):
 
     def _save_generalisation_fragment(self):
         self._current_device_counter = self._current_device_counter + 1
-        self._generalization_dataset[self._current_device_counter] = self._current_dataset.get_generalisation_fragment(self._current_device_counter)
+        self._generalization_datasets[self._current_device_counter] = self._current_dataset.get_generalisation_fragment(self._current_device_counter)
 
     def _process_dataset(self, data: dict):
         self._current_dataset = data['dataset']
@@ -51,7 +51,7 @@ class FogNode(NetworkComponent):
     def on_iteration_end(self, neural_network: NeuralNetwork):
         gradient_folder = GradientFactory.from_name(
             self._gradient_folder_name,
-            dataset=self._generalization_dataset,
+            dataset=Dataset.join(self._generalization_datasets),
             neural_network=neural_network)
         gradient = gradient_folder.fold(self._gradients)
         self._gradients.clear()
