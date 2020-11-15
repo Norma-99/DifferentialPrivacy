@@ -27,13 +27,13 @@ class FogNode(NetworkComponent):
             self._current_device = data['origin']
             self._process_dataset(data)
         elif 'neural_network' in data:
-            self._train_network(data['neural_network'])
+            self._train_network(data['neural_network'].clone())
             if self._has_all_gradients():
                 self.on_iteration_end(data['neural_network'])
 
     def _save_generalisation_fragment(self):
         self._current_device_counter = self._current_device_counter + 1
-        self._generalization_datasets[self._current_device_counter] = self._current_dataset.get_generalisation_fragment(self._current_device_counter)
+        self._generalization_datasets[self._current_device_counter] = self._current_dataset.get_generalisation_fragment(1)
 
     def _process_dataset(self, data: dict):
         self._current_dataset = data['dataset']
