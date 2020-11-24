@@ -1,7 +1,7 @@
 {
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
-      "model_path": "dffnn.json",
+      "model_path": "./configs/dffnn/dffnn.json",
       "trace_path": "./results/5nodes_dffnn.csv",
       "epochs": 1
     },

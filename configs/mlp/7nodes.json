@@ -1,7 +1,7 @@
 {
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
-      "model_path": "mlp.json",
+      "model_path": "./configs/mlp/mlp.json",
       "trace_path": "./results/7nodes_mlp.csv",
       "epochs": 1
     },
