@@ -43,9 +43,8 @@ class NeuralNetwork:
 
 
     def apply_gradient(self, gradient: Gradient):
-        self.tf_model.set_weights(
-            (Gradient(self.tf_model.get_weights()) + gradient).get()
-        )
+        new_weights = Gradient(self.tf_model.get_weights()) + gradient
+        self.tf_model.set_weights(new_weights.get())
 
     def __repr__(self):
         return f'Model(layer_count={len(self.tf_model.layers)}, optimizer=adam, loss=binary_crossentropy)'
