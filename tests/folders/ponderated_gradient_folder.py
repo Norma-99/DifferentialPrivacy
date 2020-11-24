@@ -4,8 +4,7 @@ from differential_privacy.factories.gradient_factory import GradientFactory
 from differential_privacy.dataset import Dataset
 
 
-# 0.5 / (0.5 + 0.5 + 0.5) * Gradient(0) + 0.5 / (0.5 + 0.5 + 0.5) * Gradient(1) + 0.5 / (0.5 + 0.5 + 0.5) * Gradient(2)
-EXPECTED = 1
+EXPECTED = 0 + 0.75 / (0.5 + 0.75 + 0.9) + 2 * 0.9 / (0.5 + 0.75 + 0.9)
 
 
 class NeuralNetworkStub:
@@ -21,12 +20,13 @@ class NeuralNetworkStub:
 
     def evaluate(self, dataset):
         self.dataset = dataset
-        if self.call == 0:
-            return {'acc': 0.5}
-        elif self.call == 1:
-            return {'acc': 0.5}
+        self.call += 1
+        if self.call == 1:
+            return {'accuracy': 0.5}
         elif self.call == 2:
-            return {'acc': 0.5}
+            return {'accuracy': 0.75}
+        elif self.call == 3:
+            return {'accuracy': 0.9}
 
 
 class PonderatedGradientFolderTest(FolderTestCase):

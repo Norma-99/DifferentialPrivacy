@@ -1,7 +1,6 @@
 import os
 from typing import List
 from differential_privacy.dataset import Dataset
-from differential_privacy.model.neural_network import NeuralNetwork
 from differential_privacy.gradient import Gradient
 from .gradient_folder import GradientFolder
 
@@ -12,7 +11,7 @@ RANDOM_MAX = 1.05
 
 
 class HybridGradientFolder(GradientFolder):
-    def __init__(self, neural_network: NeuralNetwork, dataset: Dataset):
+    def __init__(self, neural_network, dataset: Dataset):
         self.generalisation_dataset = dataset
         self.network = neural_network
 
