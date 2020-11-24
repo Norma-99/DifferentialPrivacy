@@ -1,8 +1,8 @@
 {
     "server_config": {
-      "dataset_path": "../datasets/extended/validation/val_dataset.pickle",
+      "dataset_path": "../../datasets/extended/validation/val_dataset.pickle",
       "model_path": "dffnn.json",
-      "trace_path": "../results/7nodes_dffnn.csv",
+      "trace_path": "../../results/7nodes_dffnn.csv",
       "epochs": 1
     },
     "fog_node_config": {
@@ -10,7 +10,7 @@
       "gradient_folder": "hybrid"
     },
     "device_config": {
-      "splittable_dataset": "../datasets/extended/train/train_dataset.pickle"
+      "splittable_dataset": "../../datasets/extended/train/train_dataset.pickle"
     },
     "fog_node_count": 7,
     "iterations": 15
