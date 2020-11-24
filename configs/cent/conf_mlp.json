@@ -1,8 +1,8 @@
 {
     "server_config": {
-      "dataset_path": "../../datasets/extended/validation/val_dataset.pickle",
+      "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
       "model_path": "mlp.json",
-      "trace_path": "../../results/cent_mlp.csv",
+      "trace_path": "./results/cent_mlp.csv",
       "epochs": 15
     },
     "fog_node_config": {
@@ -10,7 +10,7 @@
       "gradient_folder": "pass"
     },
     "device_config": {
-      "splittable_dataset": "../../datasets/extended/train/train_dataset.pickle"
+      "splittable_dataset": "./datasets/extended/train/train_dataset.pickle"
     },
     "fog_node_count": 1,
     "iterations": 1
