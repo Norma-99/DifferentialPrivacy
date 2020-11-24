@@ -16,14 +16,14 @@ class HybridGradientFolder(GradientFolder):
         self.network = neural_network
 
     def fold(self, gradients: List[Gradient]) -> Gradient:
-        grades = map(self._evaluate_gradient, gradients)
+        grades = list(map(self._evaluate_gradient, gradients))
         grade_sum = sum(grades)
-        grades = [grade / grade_sum for grade in grades]
         result = gradients[0] * 0
         for gradient, grade in zip(gradients, grades):
             random_uniform = int(os.urandom(FLOAT_BYTES), base=16) / 2 ** (FLOAT_BYTES * 8)
             random_multiplier = random_uniform * (RANDOM_MAX - RANDOM_MIN) + RANDOM_MIN
             result += gradient * grade * random_multiplier
+        result = result * (1 / grade_sum)
         return result
 
     def _evaluate_gradient(self, gradient):
