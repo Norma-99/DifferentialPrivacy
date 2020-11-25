@@ -6,8 +6,8 @@
       "epochs": 1
     },
     "fog_node_config": {
-      "device_count": 6,
-      "gradient_folder": "hybrid"
+      "device_count": 2,
+      "gradient_folder": "ponderated"
     },
     "device_config": {
       "splittable_dataset": "./datasets/extended/train/train_dataset.pickle"
