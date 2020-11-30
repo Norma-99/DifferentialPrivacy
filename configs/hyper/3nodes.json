@@ -1,8 +1,8 @@
 {
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
-      "model_path": "./configs/mlp/mlp.json",
-      "trace_path": "./results/3nodes_mlp.csv",
+      "model_path": "./configs/hyper/3nodes_net.json",
+      "trace_path": "./results/3nodes_hyper.csv",
       "epochs": 1
     },
     "fog_node_config": {
