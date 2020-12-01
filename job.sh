@@ -7,7 +7,7 @@
 PYTHON="/scratch/nas/4/norma/venv/bin/python"
 CONFIG_FOLDER="/scratch/nas/4/norma/DifferentialPrivacy/configs" 
 
-for i in 1
+for i in 3 5 7
 do
-	$PYTHON -m differential_privacy --config=$CONFIG_FOLDER/cent/conf_dffnn.json
+	$PYTHON -m differential_privacy --config=$CONFIG_FOLDER/hyper/${i}nodes.json
 done
