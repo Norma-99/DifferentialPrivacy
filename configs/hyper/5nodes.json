@@ -1,12 +1,12 @@
 {
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
-      "model_path": "./configs/hyper/5nodes_net.json",
+      "model_path": "./configs/hyper/model.json",
       "trace_path": "./results/5nodes_hyper.csv",
       "epochs": 1
     },
     "fog_node_config": {
-      "device_count": 6,
+      "device_count": 2,
       "gradient_folder": "hybrid"
     },
     "device_config": {

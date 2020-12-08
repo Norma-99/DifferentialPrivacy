@@ -20,7 +20,7 @@ class HybridGradientFolder(GradientFolder):
         grade_sum = sum(grades)
         result = gradients[0] * 0
         for gradient, grade in zip(gradients, grades):
-            random_uniform = int(os.urandom(FLOAT_BYTES), base=16) / 2 ** (FLOAT_BYTES * 8)
+            random_uniform = int.from_bytes(os.urandom(FLOAT_BYTES), byteorder='big') / 2 ** (FLOAT_BYTES * 8)
             random_multiplier = random_uniform * (RANDOM_MAX - RANDOM_MIN) + RANDOM_MIN
             result += gradient * grade * random_multiplier
         result = result * (1 / grade_sum)

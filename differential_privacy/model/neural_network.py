@@ -15,7 +15,7 @@ class NeuralNetwork:
 
     def fit(self, data:Dataset) -> Gradient:
         initial_weights = self.tf_model.get_weights()
-        self.tf_model.fit(*data.get(), epochs=self.epochs, verbose=2)
+        self.tf_model.fit(*data.get(), batch_size=1, epochs=self.epochs, verbose=2)
         final_weights = self.tf_model.get_weights()
         return Gradient.from_delta(initial_weights, final_weights)
 
