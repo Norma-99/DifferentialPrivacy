@@ -2,7 +2,7 @@
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
       "model_path": "./configs/adult/mlp.json",
-      "trace_path": "../results/adult/3nodes/adult_3nodes.csv",
+      "trace_path": "./results/adult/3nodes/adult_3nodes.csv",
       "epochs": 1
     },
     "fog_node_config": {
