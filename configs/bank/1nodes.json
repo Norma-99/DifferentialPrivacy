@@ -2,7 +2,7 @@
     "server_config": {
       "dataset_path": "./datasets/bank/val_dataset.pickle",
       "model_path": "./configs/bank/mlp.json",
-      "trace_path": "./results/bank_res.csv",
+      "trace_path": "./results/bank_cent.csv",
       "epochs": 15
     },
     "fog_node_config": {

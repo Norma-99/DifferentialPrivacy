@@ -1,18 +1,18 @@
 {
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
-      "model_path": "./configs/cent/mlp.json",
-      "trace_path": "./results/adult_1nodes.csv",
-      "epochs": 15
+      "model_path": "./configs/mlp/mlp.json",
+      "trace_path": "../results/adult/5nodes/adult_5nodes.csv",
+      "epochs": 1
     },
     "fog_node_config": {
-      "device_count": 1,
-      "gradient_folder": "pass"
+      "device_count": 2,
+      "gradient_folder": "hybrid"
     },
     "device_config": {
       "splittable_dataset": "./datasets/extended/train/train_dataset.pickle"
     },
-    "fog_node_count": 1,
-    "iterations": 1
+    "fog_node_count": 5,
+    "iterations": 15
   }
   

@@ -24,17 +24,16 @@ def norm_col(df, col:str):
 df = pd.read_csv('datasets/bank/bank-full.csv')
 
 # Get parameters to one-hot or remove them
-df['age'] = df['age'] / 120.0
-
+norm_col(df, 'age')
 to_one_hot(df, 'job', {'?'})
-to_one_hot(df, 'marital', {'?'}) # del df['marital-status']
+to_one_hot(df, 'marital', {'?'})
 to_one_hot(df, 'education', {'?'})
 to_one_hot(df, 'default', {'?'})
-norm_col(df, 'balance')
+norm_col(df, 'balance') #Podemos crear clusters entre intervalos de dinero
 to_one_hot(df, 'housing', {'?'})
 to_one_hot(df, 'loan', {'?'})
 del df['contact']
-del df['day']
+del df['day'] # repensarselo, por quincenas
 to_one_hot(df, 'month', {'?'})
 del df['duration']
 del df['campaign']

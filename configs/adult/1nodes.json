@@ -1,8 +1,8 @@
 {
     "server_config": {
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
-      "model_path": "./configs/cent/mlp.json",
-      "trace_path": "./results/adult_1nodes.csv",
+      "model_path": "./configs/adult/mlp.json",
+      "trace_path": "../results/adult/1nodes/adult_1nodes.csv",
       "epochs": 15
     },
     "fog_node_config": {
@@ -15,4 +15,3 @@
     "fog_node_count": 1,
     "iterations": 1
   }
-  

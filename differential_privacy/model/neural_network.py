@@ -3,12 +3,13 @@ from typing import Dict
 import tensorflow as tf
 from differential_privacy.dataset import Dataset
 from differential_privacy.gradient import Gradient
+from tensorflow.keras.metrics import AUC
 
 
 class NeuralNetwork:
     def __init__(self, tf_model, epochs, validation_dataset, trace_path):
         self.tf_model: tf.keras.Model = tf_model
-        self.tf_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        self.tf_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy', AUC()])
         self.epochs: int = epochs
         self.validation_dataset: Dataset = validation_dataset
         self.trace_path = trace_path
