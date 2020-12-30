@@ -1,9 +1,9 @@
 {
-    "server_config": {
+    "server_config":{
       "dataset_path": "./datasets/extended/validation/val_dataset.pickle",
       "model_path": "./configs/adult/mlp.json",
       "trace_path": "./results/adult/1nodes/adult_1nodes.csv",
-      "epochs": 15
+      "epochs": 1
     },
     "fog_node_config": {
       "device_count": 1,
@@ -13,5 +13,5 @@
       "splittable_dataset": "./datasets/extended/train/train_dataset.pickle"
     },
     "fog_node_count": 1,
-    "iterations": 1
+    "iterations": 15
   }

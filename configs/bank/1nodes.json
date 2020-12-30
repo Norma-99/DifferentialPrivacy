@@ -3,7 +3,7 @@
       "dataset_path": "./datasets/bank/val_dataset.pickle",
       "model_path": "./configs/bank/mlp.json",
       "trace_path": "./results/bank/1nodes/bank_1nodes.csv",
-      "epochs": 15
+      "epochs": 1
     },
     "fog_node_config": {
       "device_count": 1,
@@ -13,6 +13,6 @@
       "splittable_dataset": "./datasets/bank/train_dataset.pickle"
     },
     "fog_node_count": 1,
-    "iterations": 1
+    "iterations": 15
   }
   
