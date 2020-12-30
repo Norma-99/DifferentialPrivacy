@@ -1,9 +1,7 @@
 import os
 import numpy as np
-
 import tensorflow as tf
 from tensorflow import keras
-
 from sklearn.metrics import mutual_info_score
 
 MODEL_PATH = '../models/adult_1nodes' #'../models/adult_3nodes'
@@ -18,13 +16,7 @@ def load_model_weights(model):
     weights = model.load_weights(MODEL_PATH)
 
 def process_model_weights(weights):
-    # Flatten np.arrays from weights
-    flattened_weights = weights.flatten()
-    return flattened_weights
-    # np.concatenate list of np
-
-    # Save resulting weights in a 1D array
-
+    return weights.flatten()
 
 def calculate_mutual_information(node_weights, cloud_weights):
     return mutual_info_score(node_weights,cloud_weights)

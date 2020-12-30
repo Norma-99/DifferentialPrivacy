@@ -41,8 +41,6 @@ class NeuralNetwork:
             f.write(str(trace_id) + ',' + ','.join(map(str, results.values())))
             f.write('\n')
 
-
-
     def apply_gradient(self, gradient: Gradient):
         new_weights = Gradient(self.tf_model.get_weights()) + gradient
         self.tf_model.set_weights(new_weights.get())

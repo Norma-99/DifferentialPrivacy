@@ -1,5 +1,7 @@
 import os
+import numpy as np
 from typing import List
+from sklearn.metrics import normalized_mutual_info_score
 from differential_privacy.dataset import Dataset
 from differential_privacy.gradient import Gradient
 from .gradient_folder import GradientFolder
@@ -24,6 +26,10 @@ class HybridGradientFolder(GradientFolder):
             random_multiplier = random_uniform * (RANDOM_MAX - RANDOM_MIN) + RANDOM_MIN
             result += gradient * grade * random_multiplier
         result = result * (1 / grade_sum)
+        print('mutual information in the fog-embedded architecture: ')
+        for gradient in gradients: 
+            print(normalized_mutual_info_score(np.concatenate(result.get(), axis=None), np.concatenate(result.get(), axis=None)))
+            print(normalized_mutual_info_score(np.concatenate(result.get(), axis=None), np.concatenate(gradients[0].get(), axis=None)))
         return result
 
     def _evaluate_gradient(self, gradient):
