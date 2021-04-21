@@ -7,7 +7,7 @@
     },
     "fog_node_config": {
       "device_count": 2,
-      "gradient_folder": "hybrid"
+      "gradient_folder": "pass"
     },
     "device_config": {
       "splittable_dataset": "./datasets/extended/train/train_dataset.pickle"
